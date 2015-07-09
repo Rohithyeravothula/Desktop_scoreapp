@@ -89,7 +89,4 @@ def getdata():
         link_info[i].append(getscore(link_info[i][0]))
     return link_info
 
-info = getdata()
-l=len(info)
-for i in range(0,l):
-    print info
+
