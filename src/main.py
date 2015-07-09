@@ -23,10 +23,10 @@ class mainapp():
         self.background.blit(text, textpos)
         info_length = len(info)
         for i in range(0,info_length):
-            text = font.render(info[i][1][0]+"-vs-"+info[i][1][1], 1, (10, 10, 10))
+            text = font.render(info[i][1][0]+"-vs-"+info[i][1][1]+" "+info[i][2], 1, (10, 10, 10))
             #textpos = text.get_rect()
             #textpos.centerx = self.background.get_rect().centerx
-            self.background.blit(text, (10,0+i*15,20+i*10,20+i*10))
+            self.background.blit(text, (10,20+i*25,20+i*10,20+i*10))
         self.screen.blit(self.background,(0,0))
         pygame.display.update()
     def mainloop(self):

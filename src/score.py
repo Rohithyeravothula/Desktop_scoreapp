@@ -39,6 +39,35 @@ def getinternationaldata(link):
             link_int.append(link[i])
     return link_int
 
+def getscore(link):
+    r = requests.get(link)
+    soup_second = BeautifulSoup(r.text)
+    data = []
+    for link in soup_second.find_all('tr'):
+        data.append(link.td.string)
+    data2=[]
+    l=len(data)
+    for i in range(0,l):
+        try:
+            data2.append(str(data[i]))
+        except:
+            continue
+    final_data=[]
+    l=len(data2)
+    for i in range(0,l):
+        if data2[i]!="None":
+            final_data.append(data2[i])
+    final_data=list(set(final_data))
+
+    score = "NULL"
+    for string in final_data:
+        try:
+            if string[0:3]=="AUS":
+                score = string[4:9]
+        except:
+            continue
+    return score
+
 
 def getdata():
     r = requests.get('http://cricbuzz.com/')
@@ -55,9 +84,12 @@ def getdata():
         link_info.append([link, getinfo(link)])
     link_info=removeduplicates(link_info)
     link_info=getinternationaldata(link_info)
+    link_length=len(link_info)
+    for i in range(0,link_length):
+        link_info[i].append(getscore(link_info[i][0]))
     return link_info
 
-#info = getdata()
-#l=len(info)
-#for i in range(0,l):
-#    print info[i][0]
+info = getdata()
+l=len(info)
+for i in range(0,l):
+    print info
