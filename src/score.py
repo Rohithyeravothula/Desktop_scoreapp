@@ -19,6 +19,27 @@ def getinfo(link):
             info[1] = link[i + 4:j]
     return info
 
+def removeduplicates(link):
+    link_length = len(link)
+    new_link=[]
+    add_link=[]
+    for i in range(0,link_length):
+        if link[i][1] not in add_link:
+            new_link.append(link[i])
+            add_link.append(link[i][1])
+    return new_link
+
+
+def getinternationaldata(link):
+    link_length =len(link)
+    link_int=[]
+    team_int = ["ind","pak","sl","eng","wi","ban","zim","nz","aus","rsa"]
+    for i in range(0,link_length):
+        if link[i][1][0] in team_int and link[i][1][1] in team_int:
+            link_int.append(link[i])
+    return link_int
+
+
 def getdata():
     r = requests.get('http://cricbuzz.com/')
     soup = BeautifulSoup(r.text)
@@ -32,7 +53,11 @@ def getdata():
     link_info = []
     for link in live_link:
         link_info.append([link, getinfo(link)])
+    link_info=removeduplicates(link_info)
+    link_info=getinternationaldata(link_info)
     return link_info
 
-print getdata()
-
+#info = getdata()
+#l=len(info)
+#for i in range(0,l):
+#    print info[i][0]
