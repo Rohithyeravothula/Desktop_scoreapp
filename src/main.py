@@ -11,8 +11,11 @@ class mainapp():
     def __init__(self):
         self.screen = pygame.display.set_mode((400,400))
         pygame.display.set_caption("Cricket Score")
-        #self.screen.blit(self.background,(0,0))
-        #pygame.display.update()
+        self.initialbackground = pygame.Surface(self.screen.get_size())
+        self.initialbackground = self.initialbackground.convert()
+        self.initialbackground.fill((226,223,218))
+        self.screen.blit(self.initialbackground,(0,0))
+        pygame.display.update()
     def main_screen(self,info):
         self.background = pygame.Surface(self.screen.get_size())
         self.background = self.background.convert()
@@ -25,8 +28,6 @@ class mainapp():
         info_length = len(info)
         for i in range(0,info_length):
             text = font.render(info[i][1][0]+"-vs-"+info[i][1][1]+" "+info[i][2], 1, (10, 10, 10))
-            #textpos = text.get_rect()
-            #textpos.centerx = self.background.get_rect().centerx
             self.background.blit(text, (10,20+i*25,20+i*10,20+i*10))
         self.screen.blit(self.background,(0,0))
         pygame.display.update()
