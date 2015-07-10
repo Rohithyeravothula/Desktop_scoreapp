@@ -60,9 +60,10 @@ def getscore(link):
     final_data=list(set(final_data))
 
     score = "NULL"
+    score_list=["AUS","IND","NZ","WI","PAK","ZIM","SRI","ENG","BAN","RSA"]
     for string in final_data:
         try:
-            if string[0:3]=="AUS":
+            if string[0:3] in score_list and len(string)>8:
                 score = string[4:9]
         except:
             continue

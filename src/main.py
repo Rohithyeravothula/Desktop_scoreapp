@@ -1,4 +1,5 @@
 import pygame
+import time
 from score import getdata
 
 
@@ -7,15 +8,15 @@ from score import getdata
 pygame.init()
 
 class mainapp():
-    def __init__(self,info):
+    def __init__(self):
         self.screen = pygame.display.set_mode((400,400))
         pygame.display.set_caption("Cricket Score")
+        #self.screen.blit(self.background,(0,0))
+        #pygame.display.update()
+    def main_screen(self,info):
         self.background = pygame.Surface(self.screen.get_size())
         self.background = self.background.convert()
         self.background.fill((26,223,218))
-        #self.screen.blit(self.background,(0,0))
-        #pygame.display.update()
-    def main_screen(self):
         font = pygame.font.Font(None, 36)
         text = font.render("Live Cricket Scores", 1, (10, 10, 10))
         textpos = text.get_rect()
@@ -29,17 +30,32 @@ class mainapp():
             self.background.blit(text, (10,20+i*25,20+i*10,20+i*10))
         self.screen.blit(self.background,(0,0))
         pygame.display.update()
-    def mainloop(self):
-        done = False
-        while not done:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    done = True
+
+
+
+
+
+def mainloop(time_last):
+    done = False
+    while not done:
+        pygame.event.pump()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+        time_now = pygame.time.get_ticks()
+        wait_time = 1000
+        if time_now-time_last>=wait_time:
+            info=getdata()
+            canvas.main_screen(info)
             pygame.display.update()
+            time_last=time_now
+
+
+canvas = mainapp()
+time_last=pygame.time.get_ticks()
+mainloop(time_last)
 
 
 
-info = getdata()  # will get information about live matches
-canvas = mainapp(info)
-canvas.main_screen()
-canvas.mainloop()
+
+
