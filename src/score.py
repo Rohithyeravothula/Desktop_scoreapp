@@ -69,7 +69,11 @@ def getscore(link):
             continue
     return score
 
-
+def formatscore(score):
+    l=len(score)
+    for i in range(0,l):
+        if score[i]=='/':
+            break
 def getdata():
     r = requests.get('http://cricbuzz.com/')
     soup = BeautifulSoup(r.text)

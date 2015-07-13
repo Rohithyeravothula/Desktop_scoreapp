@@ -1,5 +1,7 @@
-1) Main loop has to run ouside class
+1) Main loop has to run outside class -- fixed
 2) set UI
 3) try and extract score using soup, not using str operations
 4) match info
 5) score display according to match type
+6) NOTIFICATION feature
+7)
