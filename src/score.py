@@ -69,11 +69,20 @@ def getscore(link):
             continue
     return score
 
-def formatscore(score):
-    l=len(score)
-    for i in range(0,l):
-        if score[i]=='/':
-            break
+def getmatchstatus(link):
+    r = requests.get('http://cricbuzz.com/')
+    soup = BeautifulSoup(r.text)
+    status="NIL"
+    for data in soup.find_all("td", class_="status"):
+        status_report = str(data.string)
+        if status_report != "None":
+            status = status_report
+    if status=="NIL":
+        return ["0"]  # match alive
+    else:
+        return status
+
+
 def getdata():
     r = requests.get('http://cricbuzz.com/')
     soup = BeautifulSoup(r.text)
