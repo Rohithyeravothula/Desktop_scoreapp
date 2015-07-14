@@ -10,8 +10,13 @@ pygame.display.set_caption("Cricket Score")
 initialbackground = pygame.Surface(screen.get_size())
 initialbackground = initialbackground.convert()
 initialbackground.fill((226,223,218))
-screen.blit(initialbackground,(0,0))
+font = pygame.font.Font(None, 40)
+initialtext = font.render("Loading", 1, (10, 10, 10))
+initialbackground.blit(initialtext,[100,110])
+screen.blit(initialbackground, (0,0))
 pygame.display.update()
+
+
 
 def main_screen(info):
     background = pygame.Surface(screen.get_size())
@@ -32,13 +37,12 @@ def main_screen(info):
 
 
 def mainloop(time_last):
-    done = False
-    while not done:
-        print "external loop"
+    while True:
         pygame.event.pump()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
+
         time_now = pygame.time.get_ticks()
         wait_time = 10
         if time_now-time_last>=wait_time:
@@ -46,6 +50,7 @@ def mainloop(time_last):
             main_screen(info)
             pygame.display.update()
             time_last=time_now
+
 
 
 
