@@ -43,8 +43,11 @@ def getscore(link):
     r = requests.get(link)
     soup_second = BeautifulSoup(r.text)
     data = []
-    for link in soup_second.find_all('tr'):
-        data.append(link.td.string)
+    for link in soup_second.find_all('td'):
+        try:
+            data.append(link.tr.string)
+        except:
+            continue
     data2=[]
     l=len(data)
     for i in range(0,l):
