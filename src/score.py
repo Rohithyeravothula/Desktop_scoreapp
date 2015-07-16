@@ -39,6 +39,7 @@ def getinternationaldata(link):
             link_int.append(link[i])
     return link_int
 
+
 def getscore(link):
     r = requests.get(link)
     soup_second = BeautifulSoup(r.text)
@@ -61,16 +62,24 @@ def getscore(link):
         if data2[i]!="None":
             final_data.append(data2[i])
     final_data=list(set(final_data))
-
-    score = "NULL"
     score_list=["AUS","IND","NZ","WI","PAK","ZIM","SRI","ENG","BAN","RSA"]
-    for string in final_data:
+    score_card = ""
+    for item in final_data:
         try:
-            if string[0:3] in score_list and len(string)>8:
-                score = string[4:9]
+            if item[0:3] in score_list:
+                score_card = item
         except:
             continue
-    return score
+    score = []
+    score_split = score_card.split(" ")
+    score.append(score_split[0])
+    score_score = score_split[1].split("/")
+    score.append(score_score[0])
+    score.append(score_score[1])
+    score.append(score_split[2][1:len(score_split[2])])
+    return str(score[1]+"/"+score[2])
+
+
 
 def getmatchstatus(link):
     r = requests.get('http://cricbuzz.com/')
@@ -103,7 +112,17 @@ def getdata():
     link_info=getinternationaldata(link_info)
     link_length=len(link_info)
     for i in range(0,link_length):
-        link_info[i].append(getscore(link_info[i][0]))
-    return link_info
+        try:
+            link_info[i].append(getscore(link_info[i][0]))
+        except:
+            link_info[i].append("None")
+
+    updated_link=[]
+    for i in range(0,link_length):
+        if link_info[i][2]!="None":
+            updated_link.append(link_info[i])
+    return updated_link
 
 
+#print getscore("http://www.cricbuzz.com/live-cricket-scores/13752/eng-vs-aus-2nd-test-the-ashes-2015")
+#print getdata()
