@@ -12,8 +12,9 @@ Cream = (226,223,218)
 # def and classes space starts
 
 
-def main_screen(info):
+def game_screen(info):
     background = pygame.Surface(screen.get_size())
+    print screen.get_size()
     background = background.convert()
     background.fill(White)
     font = pygame.font.Font(None, 36)
@@ -32,14 +33,13 @@ def main_screen(info):
 
 
 class Button():
-    def __init__(self,size,name):
+    def __init__(self,size,name,pos):  # name will be displayed on button, size is (x,y), position is(x,y,w,h)
         self.button = pygame.Surface(size)
         self.button = self.button.convert()
         self.button.fill((100,100,100))
         buttonfont = pygame.font.Font(None, 36)
         buttontext = buttonfont.render(name,1,(10, 10, 10))
-        buttontextpos = self.button.get_rect()
-        self.button.blit(buttontext,buttontextpos)
+        self.button.blit(buttontext,pos)
 
 
 
@@ -53,7 +53,8 @@ pygame.display.set_caption("Cricket Score")
 initialbackground = pygame.Surface(screen.get_size())
 initialbackground = initialbackground.convert()
 initialbackground.fill(Cream)
-button = Button((10,10),"hello")
+screen.blit(initialbackground, (0,0))
+button = Button((20,50),"hello",(10,10,50,50))
 screen.blit(button.button,(20,20))
 
 #font = pygame.font.Font(None, 40)
@@ -64,31 +65,53 @@ screen.blit(button.button,(20,20))
 
 
 
-screen.blit(initialbackground, (0,0))
 pygame.display.update()
 
 
 
 
 
-def mainloop(time_last):
-    while True:
-        pygame.event.pump()
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
 
-        time_now = pygame.time.get_ticks()
-        wait_time = 10
-        if time_now-time_last>=wait_time:
-            info=getdata()
-            main_screen(info)
-            pygame.display.update()
-            time_last=time_now
+
+
+
+
+
+
+
+
+
+
+
+# main pygame code
+
 
 
 time_last=pygame.time.get_ticks()
-mainloop(time_last)
+position = "game screen"
+
+done = False
+while not done:
+    pygame.event.pump()
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            done = True
+
+    if not done:
+        if position == "main screen":
+            position = "in main screen"
+
+        elif position == "game screen":
+            time_now = pygame.time.get_ticks()
+            wait_time = 10
+            if time_now-time_last>=wait_time:
+                info=getdata()
+                game_screen(info)
+                pygame.display.update()
+                time_last=time_now
+
+
+pygame.quit()
 
 
 
