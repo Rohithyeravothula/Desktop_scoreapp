@@ -33,13 +33,14 @@ def game_screen(info):
 
 
 class Button():
-    def __init__(self,size,name,pos):  # name will be displayed on button, size is (x,y), position is(x,y,w,h)
+    def __init__(self,size,name,colour):  # name will be displayed on button, size is (x,y), position is(x,y,w,h)
         self.button = pygame.Surface(size)
         self.button = self.button.convert()
-        self.button.fill((100,100,100))
+        self.button.fill(colour)
         buttonfont = pygame.font.Font(None, 36)
         buttontext = buttonfont.render(name,1,(10, 10, 10))
-        self.button.blit(buttontext,pos)
+        buttonpos = self.button.get_rect()
+        self.button.blit(buttontext,buttonpos)
 
 
 
@@ -54,15 +55,24 @@ initialbackground = pygame.Surface(screen.get_size())
 initialbackground = initialbackground.convert()
 initialbackground.fill(Cream)
 screen.blit(initialbackground, (0,0))
-button = Button((20,50),"hello",(10,10,50,50))
-screen.blit(button.button,(20,20))
+
+
+
+
+game_screen_button = Button((200,30),"Live Scores",Cream)
+setting_button = Button((200,30),"Setting",Cream)
+Appinfo_button = Button((200,30),"Appl Info",Cream)
+contactme_button = Button((220,30),"Contact Developer",Cream)
+share_button = Button((200,30),"Share",Cream)
+screen.blit(game_screen_button.button,(20,30))
+screen.blit(setting_button.button,(20,60))
+screen.blit(Appinfo_button.button,(20,90))
+screen.blit(contactme_button.button,(20,120))
+screen.blit(share_button.button,(20,150))
 
 #font = pygame.font.Font(None, 40)
 #initialtext = font.render("Loading", 1, (10, 10, 10))
 #initialbackground.blit(initialtext,[100,110])
-
-
-
 
 
 pygame.display.update()
@@ -88,7 +98,7 @@ pygame.display.update()
 
 
 time_last=pygame.time.get_ticks()
-position = "game screen"
+position = "main screen"
 
 done = False
 while not done:
@@ -96,6 +106,9 @@ while not done:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = True
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            print pygame.mouse.get_pos()
+
 
     if not done:
         if position == "main screen":
